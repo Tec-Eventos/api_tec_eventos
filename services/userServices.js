@@ -24,7 +24,7 @@ module.exports = {
 
     getUsers: callBack => {
       pool.query(
-        `SELECT id, nome, email, telefone, instituicao, datanascimento, senha FROM usersalunos`,
+        `SELECT id, nome, email, telefone, instituicao, datanascimento FROM usersalunos`,
         [],
         (error, results, fields) => {
           if(error) {
@@ -84,14 +84,17 @@ module.exports = {
 
     getUserByEmail: (email, callBack) => {
       pool.query(
-        `SELECT * FROM usersalunos WHERE email = ?`,
-        [email],
-        (error, results, fields) => {
-          if (error) {
-            return callBack(error);
+          `SELECT * FROM usersalunos WHERE email = ?`,
+          [email],
+          (error, results, fields) => {
+              if (error) {
+                  console.log("DB Error:", error); 
+                  return callBack(error);
+              }
+              console.log("DB Results:", results); 
+              return callBack(null, results[0]);
           }
-          return callBack(null, results[0]);
-        }
       );
-    }
+  }
+  
 };

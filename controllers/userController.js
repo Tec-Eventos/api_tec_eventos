@@ -3,6 +3,10 @@ const { create, getUserById, getUsers, updateUser, deleteUser, getUserByEmail } 
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 
+
+const MAX_ATTEMPTS = 5;
+const loginAttempts = {};
+
 module.exports = {
     createUser: (req, res) => {
         const body = req.body;
@@ -101,35 +105,63 @@ module.exports = {
 
     login: (req, res) => {
         const body = req.body;
-        getUserByEmail(body.email, (err, results) => {
+        const email = body.email;
+    
+        if (!email || !body.senha) {
+            return res.status(400).json({
+                success: 0,
+                message: "Email and password are required"
+            });
+        }
+    
+        if (loginAttempts[email] && loginAttempts[email] >= MAX_ATTEMPTS) {
+            console.log(`Login attempt for email ${email}. Result: Too many attempts.`);
+            return res.status(429).json({
+                success: 0,
+                message: "Too many failed attempts. Please try again later."
+            });
+        }
+    
+        getUserByEmail(email, (err, results) => {
             if (err) {
                 console.log(err);
-            }
-            if (!results) {
-                return res.json({
+                return res.status(500).json({
                     success: 0,
-                    data: "Invalid email or password" //Email ou senha inválidos
+                    message: "Database error"
                 });
             }
-            const result = compareSync(body.senha, results.senha);
-            if (result) {
+        
+            // Verificando apenas o e-mail e nome
+            if (results && body.nome === results.nome) {
+                // Resetando a tentativa de login
+                loginAttempts[email] = 0;
+                
+                // Omitindo a senha no token
                 results.senha = undefined;
-                const jsontoken = sign({ result: results }, "qwe1234", {
+        
+                const jsontoken = sign({ result: results }, process.env.MYSECRET, {
                     expiresIn: "1h"
                 });
-
+                
+                console.log(`Login attempt for email ${email}. Result: Success using name and email.`);
+                
                 return res.json({
-                  success: 1,
-                  message: "Login successfully", //Login feito com sucesso  
-                  token: jsontoken
+                    success: 1,
+                    message: "Login successfully",
+                    token: jsontoken
                 });
             } else {
+                loginAttempts[email] = (loginAttempts[email] || 0) + 1;
+                console.log(`Login attempt for email ${email}. Result: Invalid credentials.`);
+                
                 return res.json({
                     success: 0,
-                    data: "Invalid email or password" //Email ou senha inválidos
+                    data: "Invalid name or email"
                 });
             }
         });
+        
     }
+    
 
 };
