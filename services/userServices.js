@@ -48,7 +48,8 @@ module.exports = {
       )
     },
 
-    updateUser: (data, callBack) => {
+  updateUser: (data, callBack) => {
+    console.log("Data for update:", data);
       pool.query(
         `UPDATE usersalunos SET nome=?, email=?, telefone=?, instituicao=?, datanascimento=?, senha=? WHERE id= ?`,
         [
@@ -69,7 +70,8 @@ module.exports = {
       );
     },
 
-    deleteUser: (data, callBack) => {
+  deleteUser: (data, callBack) => {
+    console.log("Data for delete:", data);
       pool.query(
         `DELETE FROM usersalunos WHERE id = ?`,
         [data.id],

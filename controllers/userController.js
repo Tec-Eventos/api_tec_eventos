@@ -62,9 +62,11 @@ module.exports = {
     },
 
     updateUser: (req, res) => {
+        const { id } = req.params;
         const body = req.body;
         const salt = genSaltSync(10);
         body.senha = hashSync(body.senha, salt);
+        body.id = id;  
         updateUser(body, (err, results) => {
             if (err) {
                 console.log(err);
@@ -85,12 +87,13 @@ module.exports = {
 
     deleteUser: (req, res) => {
         const data = req.body;
-        deleteUser(data, (err, results) => {
+        const { id } = req.params;
+        deleteUser({ id: id }, (err, results) => {
             if (err) {
                 console.log(err);
                 return;
             }
-            if (!results) {
+            if (!results || results.affectedRows === 0) {  // Verificando se algum registro foi afetado
                 return res.json({
                     success: 0,
                     message: "Record not found"
