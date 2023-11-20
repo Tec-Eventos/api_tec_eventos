@@ -5,9 +5,9 @@ const { checkToken } = require("../auth/token_validation");
 
 router.post("/", createUser);
 router.get("/", getUsers);
-router.get("/:id", checkToken, getUserById);
-router.patch("/:id", checkToken, updateUser);
-router.delete("/:id", checkToken, deleteUser);
+router.get("/:rm_aluno", checkToken, getUserById);
+router.patch("/:rm_aluno", checkToken, updateUser);
+router.delete("/:rm_aluno", checkToken, deleteUser);
 router.post("/login", login);
 
 module.exports = router;

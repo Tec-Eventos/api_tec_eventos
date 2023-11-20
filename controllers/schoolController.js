@@ -30,8 +30,8 @@ module.exports = {
     },
 
     getSchoolById: (req, res) => {
-        const idEscolar = req.params.idEscolar;
-        getSchoolById(idEscolar, (err, results) => {
+        const cdEscolar = req.params.cdEscolar;
+        getSchoolById(cdEscolar, (err, results) => {
             if (err) {
                 console.log(err);
                 return;
@@ -64,11 +64,11 @@ module.exports = {
     },
 
     updateSchool: (req, res) => {
-        const { idEscolar } = req.params;
+        const { cdEscolar } = req.params;
         const body = req.body;
         const salt = genSaltSync(10);
         body.senha = hashSync(body.senha, salt);
-        body.idEscolar = idEscolar;
+        body.cdEscolar = cdEscolar;
         updateSchool(body, (err, results) => {
             if (err) {
                 console.log(err);
@@ -89,8 +89,8 @@ module.exports = {
 
     deleteSchool: (req, res) => {
         const data = req.body;
-        const { idEscolar } = req.params;
-        deleteSchool({ idEscolar: idEscolar }, (err, results) => {
+        const { cdEscolar } = req.params;
+        deleteSchool({ cdEscolar: cdEscolar }, (err, results) => {
             if (err) {
                 console.log(err);
                 return;

@@ -28,8 +28,8 @@ module.exports = {
     },
 
     getUserById: (req, res) => {
-        const id = req.params.id;
-        getUserById(id, (err, results) => {
+        const rm_aluno = req.params.rm_aluno;
+        getUserById(rm_aluno, (err, results) => {
             if (err) {
                 console.log(err);
                 return;
@@ -62,11 +62,11 @@ module.exports = {
     },
 
     updateUser: (req, res) => {
-        const { id } = req.params;
+        const { rm_aluno } = req.params;
         const body = req.body;
         const salt = genSaltSync(10);
         body.senha = hashSync(body.senha, salt);
-        body.id = id;  
+        body.rm_aluno = rm_aluno;  
         updateUser(body, (err, results) => {
             if (err) {
                 console.log(err);
@@ -87,8 +87,8 @@ module.exports = {
 
     deleteUser: (req, res) => {
         const data = req.body;
-        const { id } = req.params;
-        deleteUser({ id: id }, (err, results) => {
+        const { rm_aluno } = req.params;
+        deleteUser({ rm_aluno: rm_aluno }, (err, results) => {
             if (err) {
                 console.log(err);
                 return;

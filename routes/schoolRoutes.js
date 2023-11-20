@@ -6,9 +6,9 @@ const { checkToken } = require("../auth/token_validation");
 
 router.post("/", createSchool);
 router.get("/", getSchools);
-router.get("/:id", checkToken, getSchoolById);
-router.patch("/:id", checkToken, updateSchool);
-router.delete("/:id", checkToken, deleteSchool);
+router.get("/:cdEscolar", checkToken, getSchoolById);
+router.patch("/:cdEscolar", checkToken, updateSchool);
+router.delete("/:cdEscolar", checkToken, deleteSchool);
 router.post("/login", login);
 
 module.exports = router;

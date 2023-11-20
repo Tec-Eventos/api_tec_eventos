@@ -5,13 +5,15 @@ const pool = require("../config/database");
 module.exports = {
     create: (data, callBack) => {
         pool.query(
-            `INSERT INTO instituicao(cd_escolar, instituicao, tipo_instituicao, endereco, telefone, email, senha)
-            VALUES(?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO instituicao(cd_escolar, cnpj, instituicao, tipo_instituicao, cep_inst, telefone, email, senha)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 data.cdEscolar,
+                data.cnpj,
                 data.instituicao,
                 data.tipoInstituicao,
-                data.endereco,
+                data.cep,
+                data.telefone,
                 data.email,
                 data.senha
             ],
@@ -26,7 +28,7 @@ module.exports = {
 
     getSchools: callBack => {
         pool.query(
-            `SELECT cd_escolar, instituicao, tipo_instituicao, endereco, telefone, email, senha FROM instituicao`,
+            `SELECT cd_escolar, cnpj, instituicao, tipo_instituicao, cep_inst, telefone, email, senha FROM instituicao`,
             [],
             (error, results, fields) => {
                 if (error) {
@@ -37,10 +39,10 @@ module.exports = {
         );
     },
 
-    getSchoolById: (idEscolar, callBack) => {
+    getSchoolById: (cdEscolar, callBack) => {
         pool.query(
-            `SELECT cd_escolar, instituicao, tipo_instituicao, endereco, telefone, email, senha FROM instituicao WHERE cd_escolar = ?`,
-            [idEscolar],
+            `SELECT cd_escolar, cnpj, instituicao, tipo_instituicao, cep_inst, telefone, email, senha FROM instituicao WHERE cd_escolar = ?`,
+            [cdEscolar],
             (error, results, fields) => {
                 if (error) {
                     return callBack(error);
@@ -53,14 +55,16 @@ module.exports = {
     updateSchool: (data, callBack) => {
         console.log("Data for updata:", data);
         pool.query(
-            `UPDATE instituicao SET instituicao=?, tipo_instituicao=?, endereco=?, telefone=?, email=?, senha=? WHERE cd_escolar=?`,
+            `UPDATE instituicao SET cnpj=?, instituicao=?, tipo_instituicao=?, cep_inst=?, telefone=?, email=?, senha=? WHERE cd_escolar=?`,
             [
-                data.cdEscolar,
+                data.cnpj,
                 data.instituicao,
                 data.tipoInstituicao,
-                data.endereco,
+                data.cep,
+                data.telefone,
                 data.email,
-                data.senha
+                data.senha,
+                data.cdEscolar
             ],
             (error, results, fields) => {
                 if (error) {
@@ -75,7 +79,7 @@ module.exports = {
         console.log("Data for delete:", data);
         pool.query(
             `DELETE FROM instituicao WHERE cd_escolar=?`,
-            [data.idEscolar],
+            [data.cdEscolar],
             (error, results, fields) => {
                 if (error) {
                     return callBack(error);
