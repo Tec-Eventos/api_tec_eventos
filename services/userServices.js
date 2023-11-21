@@ -3,8 +3,8 @@ const pool = require("../config/database");
 module.exports = {
   create: (data, callBack) => {
     pool.query(
-      `INSERT INTO usersalunos(rm_aluno, nome, email, telefone, cep_aluno, senha, cd_escolar)
-          VALUES(?,?,?,?,?,?,?)`,
+      `INSERT INTO aluno(rm_aluno, nome, email, telefone, cep_aluno, senha)
+          VALUES(?,?,?,?,?,?)`,
       [
         data.rm_aluno,
         data.nome,
@@ -25,7 +25,7 @@ module.exports = {
 
   getUsers: callBack => {
     pool.query(
-      `SELECT rm_aluno, nome, email, telefone, cep_aluno, senha, cd_escolar FROM usersalunos`,
+      `SELECT rm_aluno, nome, email, telefone, cep_aluno, senha, cd_escolar FROM aluno`,
       [],
       (error, results, fields) => {
         if (error) {
@@ -38,7 +38,7 @@ module.exports = {
 
   getUserById: (rm_aluno, callBack) => {
     pool.query(
-      `SELECT rm_aluno, nome, email, telefone, cep_aluno, senha, cd_escolar FROM usersalunos WHERE rm_aluno = ?`,
+      `SELECT rm_aluno, nome, email, telefone, cep_aluno, senha, cd_escolar FROM aluno WHERE rm_aluno = ?`,
       [rm_aluno],
       (error, results, fields) => {
         if (error) {
@@ -52,7 +52,7 @@ module.exports = {
   updateUser: (data, callBack) => {
     console.log("Data for update:", data);
     pool.query(
-      `UPDATE usersalunos SET nome=?, email=?, telefone=?, cep_aluno=?, senha=?, cd_escolar=? WHERE rm_aluno= ?`,
+      `UPDATE aluno SET nome=?, email=?, telefone=?, cep_aluno=?, senha=?, cd_escolar=? WHERE rm_aluno= ?`,
       [
         data.nome,
         data.email,
@@ -74,7 +74,7 @@ module.exports = {
   deleteUser: (data, callBack) => {
     console.log("Data for delete:", data);
     pool.query(
-      `DELETE FROM usersalunos WHERE rm_aluno = ?`,
+      `DELETE FROM aluno WHERE rm_aluno = ?`,
       [data.rm_aluno],
       (error, results, fields) => {
         if (error) {
@@ -87,7 +87,7 @@ module.exports = {
 
   getUserByEmail: (email, callBack) => {
     pool.query(
-      `SELECT * FROM usersalunos WHERE email = ?`,
+      `SELECT * FROM aluno WHERE email = ?`,
       [email],
       (error, results, fields) => {
         if (error) {
