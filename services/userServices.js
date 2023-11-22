@@ -3,8 +3,8 @@ const pool = require("../config/database");
 module.exports = {
   create: (data, callBack) => {
     pool.query(
-      `INSERT INTO aluno(rm_aluno, nome, email, telefone, cep_aluno, senha)
-          VALUES(?,?,?,?,?,?)`,
+      `INSERT INTO aluno(rm_aluno, nome, email, telefone, cep_aluno, senha, cd_escolar)
+          VALUES(?,?,?,?,?,?,?)`,
       [
         data.rm_aluno,
         data.nome,
