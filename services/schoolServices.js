@@ -5,14 +5,14 @@ const pool = require("../config/database");
 module.exports = {
     create: (data, callBack) => {
         pool.query(
-            `INSERT INTO instituicao(cd_escolar, cnpj, instituicao, tipo_instituicao, cep_inst, telefone, email, senha)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO instituicao(cd_escolar, cnpj, instituicao, tipo_instituicao, cep_inst, telefone, email, senha) 
+            VALUES (?,?,?,?,?,?,?,?)`,
             [
-                data.cdEscolar,
+                data.cd_escolar,
                 data.cnpj,
                 data.instituicao,
-                data.tipoInstituicao,
-                data.cep,
+                data.tipo_instituicao,
+                data.cep_inst,
                 data.telefone,
                 data.email,
                 data.senha
@@ -59,12 +59,12 @@ module.exports = {
             [
                 data.cnpj,
                 data.instituicao,
-                data.tipoInstituicao,
-                data.cep,
+                data.tipo_instituicao,
+                data.cep_inst,
                 data.telefone,
                 data.email,
                 data.senha,
-                data.cdEscolar
+                data.cd_escolar
             ],
             (error, results, fields) => {
                 if (error) {
