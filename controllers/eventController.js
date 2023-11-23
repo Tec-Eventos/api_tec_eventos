@@ -19,9 +19,9 @@ module.exports = {
     },
 
     updateEvent: (req, res) => {
-        const { cdEvento } = req.params;
+        const { cd_evento } = req.params;
         const body = req.body;
-        body.cdEvento = cdEvento;
+        body.cd_evento = cd_evento;
         updateEvent(body, (err, results) => {
             if (err) {
                 console.log(err);
@@ -42,8 +42,8 @@ module.exports = {
 
     deleteEvent: (req, res) => {
         const data = req.body;
-        const { cdEvento } = req.params;
-        deleteEvent({ cdEvento: cdEvento }, (err, results) => {
+        const { cd_evento } = req.params;
+        deleteEvent({ cd_evento: cd_evento }, (err, results) => {
             if (err) {
                 console.log(err);
                 return;
