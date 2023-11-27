@@ -6,7 +6,7 @@ const uploadImageToDatabase = async (cd_evento, imageName, principal) => {
         const data = { cd_evento, imagem: imageName, principal };
         console.log('Dados a serem inseridos:', data);
 
-        const result = await pool.query('INSERT INTO imagem_evento SET ?', data); // Corrigido para 'imagem_evento'
+        const result = await pool.query('INSERT INTO imagem_evento SET ?', data); 
         console.log('Resultado da inserção:', result);
 
         return result;
