@@ -8,6 +8,6 @@ router.get("/aluno", getUsers);
 router.get("/:rm_aluno", checkToken, getUserById);
 router.patch("/:rm_aluno", checkToken, updateUser);
 router.delete("/:rm_aluno", checkToken, deleteUser);
-router.post("/login", login);
+router.post("/loginAluno", login);
 
 module.exports = router;

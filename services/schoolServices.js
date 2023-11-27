@@ -88,10 +88,10 @@ module.exports = {
         );
     },
 
-    getSchoolByEmail: (email, callBack) => {
+    getSchoolByCdEscolar: (cd_escolar, callBack) => {
         pool.query(
-            `SELECT * FROM instituicao WHERE email=?`,
-            [email],
+            `SELECT * FROM instituicao WHERE cd_escolar = ?`,
+            [cd_escolar],
             (error, results, fields) => {
                 if (error) {
                     console.log("DB Error:", error);

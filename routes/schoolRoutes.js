@@ -9,6 +9,6 @@ router.get("/escola", getSchools);
 router.get("/:cdEscolar", checkToken, getSchoolById);
 router.patch("/:cdEscolar", checkToken, updateSchool);
 router.delete("/:cdEscolar", checkToken, deleteSchool);
-router.post("/login", login);
+router.post("/loginEscola", login);
 
 module.exports = router;

@@ -51,6 +51,8 @@ module.exports = {
 
   updateUser: (data, callBack) => {
     console.log("Data for update:", data);
+
+
     pool.query(
       `UPDATE aluno SET nome=?, email=?, telefone=?, cep_aluno=?, senha=?, cd_escolar=? WHERE rm_aluno= ?`,
       [
@@ -85,19 +87,22 @@ module.exports = {
     );
   },
 
-  getUserByEmail: (email, callBack) => {
+  getUserByRM: (rm_aluno, callBack) => {
     pool.query(
-      `SELECT * FROM aluno WHERE email = ?`,
-      [email],
+      `SELECT * FROM aluno WHERE rm_aluno = ?`,
+      [rm_aluno],
       (error, results, fields) => {
         if (error) {
           console.log("DB Error:", error);
           return callBack(error);
-        }
+        } 
+     
+        
         console.log("DB Results:", results);
         return callBack(null, results[0]);
       }
     );
-  }
+  },
+
 
 };

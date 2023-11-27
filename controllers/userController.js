@@ -1,4 +1,4 @@
-const { create, getUserById, getUsers, updateUser, deleteUser, getUserByEmail } = require("../services/userServices");
+const { create, getUserById, getUsers, updateUser, deleteUser, getUserByRM  } = require("../services/userServices");
 
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -109,13 +109,15 @@ module.exports = {
     login: (req, res) => {
         const body = req.body;
         const email = body.email;
-    
-        if (!email || !body.senha) {
+        const rm_aluno = body.rm_aluno;
+
+        if (!email || !body.senha || !rm_aluno) {
             return res.status(400).json({
                 success: 0,
                 message: "Email and password are required"
             });
         }
+
     
         if (loginAttempts[email] && loginAttempts[email] >= MAX_ATTEMPTS) {
             console.log(`Login attempt for email ${email}. Result: Too many attempts.`);
@@ -125,7 +127,7 @@ module.exports = {
             });
         }
     
-        getUserByEmail(email, (err, results) => {
+        getUserByRM(rm_aluno, (err, results) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({
@@ -133,9 +135,10 @@ module.exports = {
                     message: "Database error"
                 });
             }
-        
-            // Verificando apenas o e-mail e nome
-            if (results && body.nome === results.nome) {
+
+
+            // Verificando apenas o e-mail e nome e o rm
+            if (email === results.email && body.nome === results.nome && rm_aluno === results.rm_aluno) {
                 // Resetando a tentativa de login
                 loginAttempts[email] = 0;
                 

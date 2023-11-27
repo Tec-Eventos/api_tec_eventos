@@ -1,6 +1,6 @@
 
 
-const { create, getSchoolById, getSchools, updateSchool, deleteSchool, getSchoolByEmail } = require("../services/schoolServices");
+const { create, getSchoolById, getSchools, updateSchool, deleteSchool, getSchoolByCdEscolar } = require("../services/schoolServices");
 
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -22,7 +22,7 @@ module.exports = {
                     message: "Database connection error"
                 });
             }
-            return res.status(200).json({
+            return res.status(201).json({
                 success: 1,
                 data: results
             });
@@ -111,8 +111,9 @@ module.exports = {
     login: (req, res) => {
         const body = req.body;
         const email = body.email;
+        const cd_escolar = body.cd_escolar;
 
-        if (!email || !body.senha) {
+        if (!email || !body.senha || !cd_escolar) {
             return res.status(400).json({
                 success: 0,
                 message: "Email and password are required"
@@ -127,7 +128,7 @@ module.exports = {
             });
         }
 
-        getUserByEmail(email, (err, results) => {
+        getSchoolByCdEscolar(cd_escolar, (err, results) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({
@@ -137,7 +138,7 @@ module.exports = {
             }
 
             // Verificando apenas o e-mail e nome
-            if (results && body.nome === results.nome) {
+            if (email === results.email && body.nome === results.nome && cd_escolar === results.cd_escolar) {
                 // Resetando a tentativa de login
                 loginAttempts[email] = 0;
 
@@ -150,7 +151,7 @@ module.exports = {
 
                 console.log(`Login attempt for email ${email}. Result: Success using name and email.`);
 
-                return res.status(200).json({
+                return res.status(201).json({
                     success: 1,
                     message: "Login successfully",
                     token: jsontoken
