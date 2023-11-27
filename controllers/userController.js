@@ -109,11 +109,12 @@ module.exports = {
     login: (req, res) => {
         const body = req.body;
         const email = body.email;
+        const rm_aluno = body.rm_aluno;
     
-        if (!email || !body.senha) {
+        if (!email || !body.senha || !rm_aluno) {
             return res.status(400).json({
                 success: 0,
-                message: "Email and password are required"
+                message: "Email, password, and RM aluno are required"
             });
         }
     
@@ -135,7 +136,7 @@ module.exports = {
             }
         
             // Verificando apenas o e-mail e nome
-            if (results && body.nome === results.nome) {
+            if (results && body.nome === results.nome && rm_aluno === results.rm_aluno) {
                 // Resetando a tentativa de login
                 loginAttempts[email] = 0;
                 
@@ -159,7 +160,7 @@ module.exports = {
                 
                 return res.json({
                     success: 0,
-                    data: "Invalid name or email"
+                    data: "Invalid name, email, or RM aluno"
                 });
             }
         });
