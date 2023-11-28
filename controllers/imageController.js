@@ -2,22 +2,29 @@ const imageService = require("../services/imageService");
 
 const uploadImage = async (req, res, next) => {
     try {
-        const { cd_evento } = req.body;
+        console.log('Chamada para uploadImage');
+        const { cd_evento, principal } = req.body;
         const imageName = req.file.filename;
 
-        if (!cd_evento || !imageName) {
+        console.log('Campos recebidos:', { cd_evento, imageName, principal });
+
+        if (!cd_evento || !imageName || !principal) {
+            console.error('Erro: Campos faltando na requisição.');
             throw new Error("Missing required data for image upload");
         }
 
-        await imageService.uploadImageToDatabase(cd_evento, imageName);
+        await imageService.uploadImageToDatabase(cd_evento, imageName, principal);
 
+        console.log('Imagem enviada com sucesso.');
         res.status(200).json({
             message: `Successfully created image with cd_evento: ${cd_evento}`,
         });
     } catch (error) {
-        next(error); // Envia o erro para o middleware de tratamento de erros
+        console.error('Erro durante o processo:', error.message);
+        next(error);
     }
 };
+
 
 module.exports = {
     uploadImage,
