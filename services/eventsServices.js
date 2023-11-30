@@ -63,4 +63,24 @@ module.exports = {
             }
         );
     },
+
+
+    access: (data, callBack) => {
+        pool.query(
+            `INSERT INTO presenca_evento(cd_evento, rm_aluno, situacao)
+            VALUES(?, ?, 0)`,
+            [
+                data.cd_evento,
+                data.rm_aluno,
+               
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+    
 }

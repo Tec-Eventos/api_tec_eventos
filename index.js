@@ -9,7 +9,7 @@ const eventRouter = require("./routes/eventRoutes");
 const enderecoRouter = require("./routes/enderecoRoutes");
 const qrcodeRouter = require("./routes/qrcodeRoutes");
 const tipoIngressoRouter = require("./routes/tipoIngressoRoutes");
-
+const listaPresencaRouter = require("./routes/listaPresencaRoutes");
 app.use(express.json());
 
 app.use("/", qrcodeRouter);
@@ -19,7 +19,7 @@ app.use("/", imageRouter);
 app.use("/", enderecoRouter);
 app.use("/", schoolRouter);
 app.use("/", tipoIngressoRouter);
-
+app.use("/", listaPresencaRouter);
 
 app.listen(process.env.APP_PORT, ()=>{
     console.log("Server up and running on PORT: ", process.env.APP_PORT)
