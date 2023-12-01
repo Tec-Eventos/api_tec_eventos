@@ -1,12 +1,12 @@
 const pool = require("../config/database");
 
-const uploadImageToDatabase = async (cd_evento, imageName, principal, logo_evento) => {
+const uploadImageUser = async (rm_aluno, imageName ) => {
     console.log('Chamada para uploadImageToDatabase');
     try {
-        const data = { cd_evento, imagem: imageName, principal, logo_evento };
+        const data = { rm_aluno, imagem: imageName };
         console.log('Dados a serem inseridos:', data);
 
-        const result = await pool.query('INSERT INTO imagem_evento SET ?', data); 
+        const result = await pool.query('INSERT INTO imagem_perfil_aluno SET ?', data); 
         console.log('Resultado da inserção:', result);
 
         return result;
@@ -16,7 +16,6 @@ const uploadImageToDatabase = async (cd_evento, imageName, principal, logo_event
     }
 };
 
-
 module.exports = {
-    uploadImageToDatabase,
+    uploadImageUser,
 };
