@@ -1,6 +1,6 @@
 
 
-const { create, getSchoolById, getSchools, updateSchool, deleteSchool, getSchoolByCdEscolar } = require("../services/schoolServices");
+const { create, getSchoolById, getSchools, updateSchool, deleteSchool, getSchoolByCdEscolar, getAllEventsSchoolDo } = require("../services/schoolServices");
 
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -44,6 +44,27 @@ module.exports = {
             }
 
             return res.status(200).json({
+                success: 1,
+                data: results
+            });
+        });
+    },
+
+    getAllEventsSchoolDo: (req, res) => {
+        const cdEscolar = req.params.cdEscolar;
+        getAllEventsSchoolDo(cdEscolar, (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if (!results) {
+                return res.json({
+                    success: 0,
+                    message: "Record not found" //Registro não encontrado
+                });
+            }
+
+            return res.json({
                 success: 1,
                 data: results
             });

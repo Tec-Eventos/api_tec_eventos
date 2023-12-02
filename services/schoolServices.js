@@ -51,6 +51,23 @@ module.exports = {
         );
     },
 
+    getAllEventsSchoolDo: (cdEscolar, callBack) => {
+        pool.query(
+            `SELECT e.cd_evento, e.nome_evento, e.data_evento, e.horario, e.quantidade_ingressos, e.descricao, e.cep_evento,
+            CASE WHEN ie.principal = 1 THEN ie.imagem ELSE NULL END AS imagem
+        FROM evento e
+        LEFT JOIN imagem_evento ie ON e.cd_evento = ie.cd_evento
+        WHERE e.cd_instituicao = ?`,
+        [cdEscolar],
+        (error, results, fields) => {
+            if (error) {
+              return callBack(error);
+            }
+            return callBack(null, results);
+          }
+        );
+    },
+
     updateSchool: (data, callBack) => {
         console.log("Data for updata:", data);
         pool.query(

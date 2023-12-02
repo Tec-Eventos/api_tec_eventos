@@ -1,4 +1,4 @@
-const { create, getUserById, getUsers, updateUser, deleteUser, getUserByRM  } = require("../services/userServices");
+const { create, getUserById, getUsers, updateUser, deleteUser, getUserByRM, getAllEventsUser  } = require("../services/userServices");
 
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -54,6 +54,27 @@ module.exports = {
                 console.log(err);
                 return;
             }
+            return res.json({
+                success: 1,
+                data: results
+            });
+        });
+    },
+
+    getAllEventsUser: (req, res) => {
+        const rm_aluno = req.params.rm_aluno;
+        getAllEventsUser(rm_aluno, (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if (!results) {
+                return res.json({
+                    success: 0,
+                    message: "Record not found" //Registro não encontrado
+                });
+            }
+
             return res.json({
                 success: 1,
                 data: results
