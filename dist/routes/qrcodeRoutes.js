@@ -1,0 +1,1 @@
+const{Router:Router}=require("express"),router=require("express").Router(),{createQRCode:createQRCode,getQRCodeValidator:getQRCodeValidator}=require("../controllers/qrcodeController");router.post("/qrcode",createQRCode),router.get("/qrcode/:cd_evento/:rm_aluno",getQRCodeValidator),module.exports=router;

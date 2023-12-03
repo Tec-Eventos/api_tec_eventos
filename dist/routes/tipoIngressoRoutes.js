@@ -1,0 +1,1 @@
+const{Router:Router}=require("express"),{createTipoIngresso:createTipoIngresso,updateTipoIngresso:updateTipoIngresso}=require("../controllers/tipoIngressoController"),router=require("express").Router();router.post("/ingresso",createTipoIngresso),router.patch("/ingresso/update/:cd_evento",updateTipoIngresso),module.exports=router;
