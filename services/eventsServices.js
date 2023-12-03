@@ -4,8 +4,8 @@ const pool = require("../config/database");
 module.exports = {
     create: (data, callBack) => {
         pool.query(
-            `INSERT INTO evento(cd_evento, cd_instituicao, nome_evento, data_evento, horario, quantidade_ingressos, descricao, cep_evento, senha_evento)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO evento(cd_evento, cd_instituicao, nome_evento, data_evento, horario, quantidade_ingressos, descricao, cep_evento, senha_evento, preco)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 data.cd_evento,
                 data.cd_instituicao,
@@ -15,7 +15,8 @@ module.exports = {
                 data.quantidade_ingressos,
                 data.descricao,
                 data.cep,
-                data.senha
+                data.senha,
+                data.preco
             ],
             (error, results, fields) => {
                 if (error) {
@@ -29,7 +30,7 @@ module.exports = {
     updateEvent: (data, callBack) => {
         console.log("Data for update:", data);
         pool.query(
-            `UPDATE evento SET cd_instituicao=?, nome_evento=?, data_evento=?, horario=?, quantidade_ingressos=?, descricao=?, cep_evento=?, senha_evento=? WHERE cd_evento= ?`,
+            `UPDATE evento SET cd_instituicao=?, nome_evento=?, data_evento=?, horario=?, quantidade_ingressos=?, descricao=?, cep_evento=?, senha_evento=?, preco=? WHERE cd_evento= ?`,
             [
                 data.cd_evento,
                 data.cd_instituicao,
@@ -39,7 +40,8 @@ module.exports = {
                 data.quantidade_ingressos,
                 data.descricao,
                 data.cep,
-                data.senha
+                data.senha,
+                data.preco
             ],
             (error, results, fields) => {
                 if (error) {

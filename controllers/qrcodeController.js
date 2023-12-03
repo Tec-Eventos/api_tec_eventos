@@ -12,12 +12,16 @@ module.exports = {
                     success: 0,
                     message: "Erro relacionado ao Banco de Dados"
                 })
-            }
+            } 
 
             return res.status(200).json({
                 success: 1,
                 data: results
-            });
+            })
+
+        
+
+            
         });
     },
 
