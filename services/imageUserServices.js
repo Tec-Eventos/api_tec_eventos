@@ -16,6 +16,8 @@ const uploadImageUser = async (rm_aluno, imageName ) => {
     }
 };
 
+
+
 module.exports = {
     uploadImageUser,
 };

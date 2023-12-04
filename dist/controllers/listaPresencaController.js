@@ -1,0 +1,1 @@
+const{getListaPresenca:getListaPresenca}=require("../services/listaPresencaServices");module.exports={getListaPresenca:(e,s)=>{const c=e.params.cd_evento;getListaPresenca(c,((e,c)=>{if(!e)return c?s.json({success:1,data:c}):s.json({success:0,message:"Record not found"});console.log(e)}))}};

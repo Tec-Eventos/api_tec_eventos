@@ -23,6 +23,9 @@ router.post('/upload', upload.single('imagem'), imageController.uploadImage);
 //ROTA PARA VISUALIZAR A IMAGEM
 router.get('/imagem/:arquivo', imageController.viewImage);
 
+//Rota para ver todas as imagens de um evento só
+router.get('/imagem/evento/:cd_evento', imageController.getImagesForEvent);
+
 
 
 module.exports = router;
