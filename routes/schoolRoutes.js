@@ -6,10 +6,10 @@ const { checkToken } = require("../auth/token_validation");
 
 router.post("/escola", createSchool);
 router.get("/escola", getSchools);
-router.get("/escola/:cdEscolar", getAllEventsSchoolDo);
-router.get("/:cdEscolar", checkToken, getSchoolById);
-router.patch("/:cdEscolar", checkToken, updateSchool);
-router.delete("/:cdEscolar", checkToken, deleteSchool);
+router.get("/escola/events/:cdEscolar", getAllEventsSchoolDo);
+router.get("/escola/:cdEscolar", getSchoolById);
+router.patch("/escola/:cdEscolar", checkToken, updateSchool);
+router.delete("/escola/:cdEscolar", checkToken, deleteSchool);
 router.post("/loginEscola", login);
 
 module.exports = router;
