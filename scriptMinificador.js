@@ -2,7 +2,7 @@ const fs = require('fs');
 const { minify } = require('terser');
 
 const folders = ['controllers', 'routes', 'services'];
-const customFolders = ['auth', 'config']; 
+const customFolders = ['auth', 'config', 'tmp']; 
 
 folders.concat(customFolders).forEach(folder => {
   fs.readdirSync(folder).forEach(file => {

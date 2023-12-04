@@ -17,9 +17,8 @@ const uploadImageToDatabase = async (cd_evento, imageName, principal, logo_event
 };
 
 
-module.exports = {
-    uploadImageToDatabase,
 
+module.exports = {
     getImagesForEvent: (cd_evento, callBack) => {
         pool.query(
           ` SELECT 
@@ -43,4 +42,6 @@ module.exports = {
           }
         );
       },
+
+      uploadImageToDatabase,
 };
