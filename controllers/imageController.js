@@ -1,4 +1,5 @@
 const imageService = require("../services/imageService");
+const path = require('path');
 
 const uploadImage = async (req, res, next) => {
     try {
@@ -25,7 +26,23 @@ const uploadImage = async (req, res, next) => {
     }
 };
 
+const viewImage = (req, res, next) => {
+    try {
+        
+        const imageName = req.params.arquivo; // ou a lógica que você usa para nomear as imagens
+
+        // Envie a imagem como resposta
+        res.sendFile(path.join(__dirname, `../tmp/uploads/${imageName}`));
+    } catch (error) {
+        console.error('Erro ao visualizar imagem:', error.message);
+        next(error);
+    }
+};
+
+
+
 
 module.exports = {
     uploadImage,
+    viewImage,
 };

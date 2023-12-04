@@ -53,11 +53,27 @@ module.exports = {
 
     getAllEventsSchoolDo: (cdEscolar, callBack) => {
         pool.query(
-            `SELECT e.cd_evento, e.nome_evento, e.data_evento, e.horario, e.quantidade_ingressos, e.descricao, e.cep_evento,
-            CASE WHEN ie.principal = 1 THEN ie.imagem ELSE NULL END AS imagem
-        FROM evento e
-        LEFT JOIN imagem_evento ie ON e.cd_evento = ie.cd_evento
-        WHERE e.cd_instituicao = ?`,
+            `
+            SELECT 
+            ev.cd_evento, 
+            ev.nome_evento, 
+            ev.cd_instituicao, 
+            ev.data_evento, 
+            ev.horario, 
+            ev.quantidade_ingressos, 
+            ev.descricao, 
+            ev.cep_evento,
+            ins.instituicao, 
+            ins.tipo_instituicao,
+            ie.imagem AS imagem_evento,
+            le.imagem AS logo_evento
+        FROM 
+            evento ev
+            JOIN instituicao ins ON ev.cd_instituicao = ins.cd_escolar
+            LEFT JOIN imagem_evento ie ON ev.cd_evento = ie.cd_evento AND ie.principal = 1
+            LEFT JOIN imagem_evento le ON ev.cd_evento = le.cd_evento AND le.logo_evento = 1
+        WHERE 
+            ev.cd_instituicao = ?`,
         [cdEscolar],
         (error, results, fields) => {
             if (error) {

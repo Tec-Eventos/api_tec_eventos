@@ -106,14 +106,27 @@ module.exports = {
 
   getAllEventsUser: (rm_aluno, callBack) => {
     pool.query(
-        `SELECT ev.cd_evento, ev.nome_evento, ev.cd_instituicao, ev.data_evento, ev.horario, ev.quantidade_ingressos, ev.descricao, ev.cep_evento,
-        ins.instituicao, ins.tipo_instituicao,
-        CASE WHEN ie.principal = 1 THEN ie.imagem ELSE NULL END AS imagem
-    FROM presenca_evento pe
-    JOIN evento ev ON pe.cd_evento = ev.cd_evento
-    JOIN instituicao ins ON ev.cd_instituicao = ins.cd_escolar
-    LEFT JOIN imagem_evento ie ON ev.cd_evento = ie.cd_evento
-    WHERE pe.rm_aluno = ?`,
+        `SELECT 
+        ev.cd_evento, 
+        ev.nome_evento, 
+        ev.cd_instituicao, 
+        ev.data_evento, 
+        ev.horario, 
+        ev.quantidade_ingressos, 
+        ev.descricao, 
+        ev.cep_evento,
+        ins.instituicao, 
+        ins.tipo_instituicao,
+        ie.imagem AS imagem_evento,
+        le.imagem AS logo_evento
+    FROM 
+        presenca_evento pe
+        JOIN evento ev ON pe.cd_evento = ev.cd_evento
+        JOIN instituicao ins ON ev.cd_instituicao = ins.cd_escolar
+        LEFT JOIN imagem_evento ie ON ev.cd_evento = ie.cd_evento AND ie.principal = 1
+        LEFT JOIN imagem_evento le ON ev.cd_evento = le.cd_evento AND le.logo_evento = 1
+    WHERE 
+        pe.rm_aluno = ?`,
     [rm_aluno],
     (error, results, fields) => {
         if (error) {

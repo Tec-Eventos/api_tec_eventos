@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const path = require('path');
 
 const userRouter = require("./routes/userRoutes");
 const imageRouter = require("./routes/imageRoutes");
@@ -12,6 +13,8 @@ const tipoIngressoRouter = require("./routes/tipoIngressoRoutes");
 const listaPresencaRouter = require("./routes/listaPresencaRoutes");
 const imageUserRouter = require("./routes/imageUserRoutes");
 app.use(express.json());
+app.use(express.static(path.join(__dirname, './tmp/uploads')));
+
 
 app.use("/", qrcodeRouter);
 app.use("/", eventRouter);

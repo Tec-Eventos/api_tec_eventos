@@ -29,5 +29,29 @@ module.exports = {
             }
             return  callBack(null, result[0]);
         })
+    },
+
+
+    selectQrCodeAluno: (cd_evento, rm_aluno, callBack) => {
+        selectSQL = `SELECT 
+        presenca_evento.cd_evento, 
+        aluno.nome, 
+        aluno.rm_aluno, 
+        qrcode_evento.valor_qr,
+        imagem_evento.imagem
+    FROM 
+        ((((presenca_evento
+    INNER JOIN evento ON presenca_evento.cd_evento = evento.cd_evento)
+    INNER JOIN aluno ON presenca_evento.rm_aluno = aluno.rm_aluno)
+    INNER JOIN qrcode_evento ON presenca_evento.cd_evento = qrcode_evento.cd_evento)
+    LEFT JOIN imagem_evento ON evento.cd_evento = imagem_evento.cd_evento AND imagem_evento.logo_evento = 1)
+    WHERE presenca_evento.cd_evento = ? AND presenca_evento.rm_aluno = ?`;
+
+        pool.query(selectSQL, [cd_evento, rm_aluno], (error, result, fields) => {
+            if(error){
+                return callBack(error);
+            }
+            return  callBack(null, result[0]);
+        });
     }
 }

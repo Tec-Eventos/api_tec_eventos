@@ -19,4 +19,10 @@ const upload = multer({
 // Rota para upload de imagem
 router.post('/upload', upload.single('imagem'), imageController.uploadImage);
 
+
+//ROTA PARA VISUALIZAR A IMAGEM
+router.get('/imagem/:arquivo', imageController.viewImage);
+
+
+
 module.exports = router;
