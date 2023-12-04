@@ -63,6 +63,8 @@ module.exports = {
             ev.quantidade_ingressos, 
             ev.descricao, 
             ev.cep_evento,
+            ev.preco,
+            ev.senha_evento,
             ins.instituicao, 
             ins.tipo_instituicao,
             ie.imagem AS imagem_evento,
